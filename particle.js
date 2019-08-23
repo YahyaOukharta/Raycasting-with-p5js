@@ -1,14 +1,30 @@
 class Particle{
-	constructor(x,y){
+	constructor(x,y,heading){
 		this.pos=createVector(x,y);
+		this.fov = 60;
+		this.heading = heading;
 		this.rays=[];
-		for(let i = 0; i < 360 ; i += 5){
-			this.rays.push(new Ray(this.pos,radians(i)));
+		for(let i = -this.fov/2; i < this.fov/2; i += 5){
+			this.rays.push(new Ray(this.pos,radians(i)+ this.heading));
 		}
 	}
-	update(x,y){
-		this.pos.x = x;
-		this.pos.y = y;
+
+	rotate(dir){
+		this.heading += dir * 0.08;
+		for(let ray of this.rays){
+			ray.heading += dir *0.08;
+		}
+	}
+	move(dir){
+		this.dir = p5.Vector.fromAngle(this.heading);
+		this.pos.add(this.dir.mult(2*dir));
+	}
+
+	update(){
+		for(let ray of this.rays){
+			ray.update();
+			ray.pos=this.pos.copy();
+		}
 	}
 	show(){
 		for(let ray of this.rays){

@@ -5,7 +5,9 @@ class Ray{
 		this.dir = p5.Vector.fromAngle(this.heading);
 
 	}
-	
+	update(){
+		this.dir = p5.Vector.fromAngle(this.heading);
+	}
 	show(){
 		const mag = 20;
 		push();
