@@ -15,14 +15,15 @@ class Particle{
 		return this.look(walls);
 	}
 	rotate(dir){
-		this.heading += dir * 0.08;
+		const rotVel = 0.05;
+		this.heading += dir * rotVel;
 		for(let ray of this.rays){
-			ray.heading += dir *0.08;
+			ray.heading += dir *rotVel;
 		}
 	}
 	move(dir){
 		this.dir = p5.Vector.fromAngle(this.heading);
-		this.pos.add(this.dir.mult(2*dir));
+		this.pos.add(this.dir.mult(dir));
 	}
 
 	update(){
@@ -43,6 +44,7 @@ class Particle{
 			let angle;
 			let record = Infinity;
 			let closest = null;
+			let color = null;
 			for(let wall of walls){
 				const pt = ray.cast(wall);
 				if(pt){
@@ -50,6 +52,7 @@ class Particle{
 					if(d < record){
 						record = d;
 						closest = pt;
+						color = wall.color;
 					}
 				}
 			}
@@ -60,7 +63,7 @@ class Particle{
 				angle = ray.heading-this.heading;
 			}
 
-			data.push({pt:closest,angle:angle});
+			data.push({pt:closest,angle:angle,color:color});
 			
 
 		}
