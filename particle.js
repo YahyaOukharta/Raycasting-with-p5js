@@ -7,6 +7,7 @@ class Particle{
 		for(let i = -this.fov/2; i < this.fov/2; i += 1){
 			this.rays.push(new Ray(this.pos,radians(i)+ this.heading));
 		}
+		this.middleRay={};
 	}
 	//mainfunction
 	run(walls){
@@ -22,8 +23,11 @@ class Particle{
 		}
 	}
 	move(dir){
-		this.dir = p5.Vector.fromAngle(this.heading);
-		this.pos.add(this.dir.mult(dir));
+		let d = dist(this.pos.x,this.pos.y,this.middleRay.pt.x,this.middleRay.pt.y);
+		if(d > 10){
+			this.dir = p5.Vector.fromAngle(this.heading);
+			this.pos.add(this.dir.mult(dir));
+		}
 	}
 
 	update(){
@@ -67,6 +71,7 @@ class Particle{
 			
 
 		}
+		this.middleRay = data[floor(this.fov/2)];
 		//console.log(data);
 		return data;  //returns data for rendering the scene wolfenstein style
 

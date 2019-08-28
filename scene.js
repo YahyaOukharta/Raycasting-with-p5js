@@ -24,7 +24,7 @@ class Scene{
 				const offset = map(d,0,diameter,0,this.h/2);
 				const c = map(d,0,diameter,255,-255);
 				push();
-					noStroke();
+					stroke(20);
 					fill(slice.color,100,100,c);
 					rect(i*this.rw,offset,this.rw+1,height-offset*2);
 				pop();
